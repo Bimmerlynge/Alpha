@@ -1,0 +1,8 @@
+#!/bin/sh
+
+current_branch="$(git rev-parse --abbrev-ref HEAD)"
+
+if [[ "$current_branch" == "main" || "$current_branch" == "develop" ]]; then
+  echo "Error: You are not allowed to commit to this branch"
+  exit 1
+fi
