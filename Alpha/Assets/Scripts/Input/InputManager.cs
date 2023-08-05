@@ -10,6 +10,9 @@ public class InputManager : MonoBehaviour
     public delegate void KeyAction(string key);
     public static KeyAction OnKeyPressed, OnKeyReleased;
 
+    public delegate void PlaceAction();
+    public static PlaceAction OnPlace;
+
     private void OnEnable()
     {
         _actions = new PlayerInputs();
@@ -19,6 +22,8 @@ public class InputManager : MonoBehaviour
 
         _actions.Player.Camera.started += KeyPressed;
         _actions.Player.Camera.canceled += KeyRelease;
+
+        _actions.Player.Place.performed += Place;
 
     }
 
@@ -37,5 +42,11 @@ public class InputManager : MonoBehaviour
         var key = context.control.name;
 
         OnKeyReleased?.Invoke(key);
+    }
+
+    private void Place(InputAction.CallbackContext context) {
+
+        OnPlace?.Invoke();
+    
     }
 }
